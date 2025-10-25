@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoce-Hub", "Invoce-Hub\Invoce-Hub.csproj", "{B839B754-C820-46D7-8F47-CFA6A11D5F3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoce-Hub", "Invoce-Hub.csproj", "{B839B754-C820-46D7-8F47-CFA6A11D5F3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
