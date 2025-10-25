@@ -1,0 +1,67 @@
+# Compiled source #
+###################
+*.dll
+*.exe
+*.so
+*.dylib
+*.pyc
+*.pyo
+*.pdb
+*.mdb
+*.class
+
+# Rider project files #
+########################
+.idea/
+*.sln.iml
+
+# User-specific files #
+########################
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.docstates
+*.user
+*.userosscache
+*.sln.ide
+
+# Build results #
+##################
+bin/
+obj/
+out/
+*.log
+
+# Entity Framework migrations #
+###############################
+Migrations/
+
+# macOS files #
+###############
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs and databases #
+#######################
+*.log
+*.sqlite
+*.db
+
+# Environment variables #
+##########################
+.env
+
+# Visual Studio Code #
+#######################
+.vscode/
+
+# Rider settings #
+###################
+.idea/
+*.sln.iml
+
+# Other #
+#########
+*.swp
+*.lock.json
