@@ -7,20 +7,17 @@ public class User
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; } = Guid.NewGuid();
     
-    [Required]
+    [Required, MaxLength(50)]
+    public string Name { get; set; } = string.Empty;
+    
     [MaxLength(50)]
+    public string LastName { get; set; } = string.Empty;
+
+    [Required, MaxLength(50)]
     public string Email { get; set; } = string.Empty;
     
     [Required, MaxLength(250)]
     public string PasswordHash { get; set; } = string.Empty;
-    
-    [Required, MaxLength(50)]
-    public string Name { get; set; } = string.Empty;
-    
-    [Required]
-    [MaxLength(50)]
-    public string LastName { get; set; } = string.Empty;
-    
     
     public Guid TenantId { get; set; }
     public Tenant? Tenant { get; set; }

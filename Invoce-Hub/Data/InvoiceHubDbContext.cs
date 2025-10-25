@@ -1,10 +1,15 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Invoce_Hub.Models;
 
 namespace Invoce_Hub.Data
 {
-    public class InvoiceHubDbContext(DbContextOptions<InvoiceHubDbContext> options) : DbContext(options)
+    public class InvoiceHubDbContext : DbContext
     {
+        public InvoiceHubDbContext(DbContextOptions<InvoiceHubDbContext> options) : base(options)
+        {
+        }
+
         public DbSet<User> Users => Set<User>();
         public DbSet<Tenant> Tenants => Set<Tenant>();
         public DbSet<Document> Documents => Set<Document>();
