@@ -5,19 +5,44 @@ using Invoce_Hub.Services.Implementations;
 using Invoce_Hub.Services;
 using Invoce_Hub.Repositories.Implementations;
 using Invoce_Hub.Repositories;
+using System.Reflection;
 
 Env.Load(); 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers();
+
+// Add Swagger/OpenAPI services
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Invoice Hub API",
+        Version = "v1",
+        Description = "API para gestión de facturas e invoices",
+        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+        {
+            Name = "Invoice Hub",
+            Email = "support@invoicehub.com"
+        }
+    });
+
+    // Include XML comments if available
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
+});
 
 var connectionString = builder.Configuration.GetConnectionString("InvoiceHubDatabase") 
     ?? Environment.GetEnvironmentVariable("INVOICE_HUB_DB_CONNECTION_STRING")
     ?? throw new InvalidOperationException("Connection string 'InvoiceHubDatabase' not found.");
 
-builder.Services.AddOpenApi();
 builder.Services.AddDbContext<InvoiceHubDbContext>(options =>
     options.UseNpgsql(connectionString)
 );
@@ -54,33 +79,18 @@ using (var scope = app.Services.CreateScope())
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Invoice Hub API v1");
+        c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root URL
+    });
 }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseAuthorization();
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
