@@ -27,7 +27,8 @@ namespace Invoce_Hub.Data
                 entity.HasOne(u => u.Tenant)
                       .WithMany(t => t.Users)
                       .HasForeignKey(u => u.TenantId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .IsRequired(false)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             

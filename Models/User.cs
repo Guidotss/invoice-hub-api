@@ -5,7 +5,7 @@ public class User
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
     
     [Required, MaxLength(50)]
     public string Name { get; set; } = string.Empty;
@@ -19,7 +19,8 @@ public class User
     [Required, MaxLength(250)]
     public string PasswordHash { get; set; } = string.Empty;
     
-    public Guid TenantId { get; set; }
+    // Hacer TenantId nullable para permitir crear usuarios sin asignar tenant inicialmente
+    public Guid? TenantId { get; set; }
     public Tenant? Tenant { get; set; }
    
    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

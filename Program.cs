@@ -50,10 +50,12 @@ builder.Services.AddDbContext<InvoiceHubDbContext>(options =>
 
 //Services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 //Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 
 var app = builder.Build();
