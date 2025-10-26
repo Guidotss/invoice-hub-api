@@ -88,18 +88,6 @@ namespace Invoce_Hub.Data
                 entity.Property(e => e.Parsed).HasColumnType("jsonb");
                 entity.Property(e => e.Validation).HasColumnType("jsonb");
             });
-
-            modelBuilder.Entity<Status>().HasData(
-                new Status { Id = Guid.NewGuid(), Name = "uploaded" },
-                new Status { Id = Guid.NewGuid(), Name = "processing" },
-                new Status { Id = Guid.NewGuid(), Name = "validated" },
-                new Status { Id = Guid.NewGuid(), Name = "failed" }
-            );
-
-            modelBuilder.Entity<Tax>().HasData(
-                new Tax { Id = Guid.NewGuid(), TaxType = "CUIT" },
-                new Tax { Id = Guid.NewGuid(), TaxType = "NIF" }
-            );
         }
     }
 }
